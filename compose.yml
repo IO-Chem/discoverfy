@@ -1,0 +1,11 @@
+services:
+  react:
+    container_name: react-dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./app:/app
+    ports:
+      - 3000:3000
+    command: ["npm", "start"]
