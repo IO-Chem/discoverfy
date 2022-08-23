@@ -32,6 +32,9 @@ function App() {
             >
               Learn Chakra
             </Link>
+            <Text>
+              with Hot Reload all up inya face from a containerized place...
+            </Text>
           </VStack>
         </Grid>
       </Box>
