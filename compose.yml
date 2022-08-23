@@ -1,6 +1,7 @@
 services:
   react:
     container_name: react-dev
+    #tty: true
     build:
       context: .
       dockerfile: Dockerfile
@@ -12,6 +13,7 @@ services:
 
   express:
     container_name: express-dev
+    tty: true
     build:
       context: .
       dockerfile: Dockerfile.server
@@ -19,4 +21,4 @@ services:
       - ./server:/server
     ports:
       - "5000:5000"
-    command: ["npm", "start"]
+    #command: ["npm", "start"]
