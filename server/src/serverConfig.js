@@ -1,7 +1,7 @@
-import { resolve } from "path";
+const path = require("path");
 
 const isProd = process.env.NODE_ENV === "production";
-const distFolder = resolve(__dirname, "../dist");
+const distFolder = path.resolve(__dirname, "../dist");
 
 function generateRandomString(length) {
     let varChars = "";
@@ -13,4 +13,4 @@ function generateRandomString(length) {
     return varChars
 };
 
-export { isProd, distFolder, generateRandomString }
+module.exports = { isProd, distFolder, generateRandomString }

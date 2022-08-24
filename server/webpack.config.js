@@ -24,4 +24,4 @@ var webpackConfig = {
     }
 }
 
-export default webpackConfig;
+module.exports = webpackConfig;
