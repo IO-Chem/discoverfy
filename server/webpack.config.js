@@ -1,13 +1,13 @@
-import { distFolder, isProd } from "./src/serverConfig";
+var config = require('./src/serverConfig');
 
 var webpackConfig = {
     entry: {main: ["./bin/www.js"]},
     target: 'node',
     output: {
-        path: distFolder,
+        path: config.distFolder,
         filename: "main.bundle.js",
     },
-    mode: isProd ? "production" : "development",
+    mode: config.isProd ? "production" : "development",
     module: {
         rules: [
             {

@@ -3,7 +3,6 @@
 /**
  * Module dependencies.
  */
-
 import app from '../src/server';
 var debug = require('debug')('server:server');
 import { createServer } from 'http';
@@ -11,10 +10,10 @@ import { createServer } from 'http';
 /**
  * Get port from environment and store in Express.
  */
-
 var port = normalizePort(process.env.PORT || '5000');
 app.set('port', port);
-
+// write port to environemnt variables
+process.env.PORT = app.get('port')
 /**
  * Create HTTP server.
  */

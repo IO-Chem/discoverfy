@@ -1,8 +1,9 @@
 import { resolve } from "path";
 
-export const isProd = process.env.NODE_ENV === "production";
-export const distFolder = resolve(__dirname, "../dist");
-export function generateRandomString(length) {
+const isProd = process.env.NODE_ENV === "production";
+const distFolder = resolve(__dirname, "../dist");
+
+function generateRandomString(length) {
     let varChars = "";
     let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -11,3 +12,5 @@ export function generateRandomString(length) {
     }
     return varChars
 };
+
+export { isProd, distFolder, generateRandomString }
