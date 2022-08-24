@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { generateRandomString } from '../src/serverConfig'
 
 let router = Router();
 
@@ -8,9 +9,13 @@ router.use((req, res, next) => {
   next()
 })
 
-/* Login to Spotify endpoint */
+// Login to Spotify endpoint
 router.get('/login', (req, res) => {
   res.send('respond with a resource');
 });
+
+// Callback from Login endpoint
+router.get('/callback', (req, res) => {
+})
 
 export default router;
