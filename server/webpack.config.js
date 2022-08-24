@@ -1,18 +1,18 @@
-const config = require("./src/serverConfig");
+import { distFolder, isProd } from "./src/serverConfig";
 
 var webpackConfig = {
-    entry: {main: ["./bin/www"]},
+    entry: {main: ["./bin/www.js"]},
     target: 'node',
     output: {
-        path: config.distFolder,
+        path: distFolder,
         filename: "main.bundle.js",
     },
-    mode: config.isProd ? "production" : "development",
+    mode: isProd ? "production" : "development",
     module: {
         rules: [
             {
-                test: /\.m?js$/,
-                exclude: /(node_modules)/,
+                test: /\.js$/,
+                exclude: /node_modules/,
                 use: {
                     loader: "babel-loader",
                     options: {
@@ -24,4 +24,4 @@ var webpackConfig = {
     }
 }
 
-module.exports = webpackConfig;
+export default webpackConfig;

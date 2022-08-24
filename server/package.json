@@ -6,6 +6,7 @@
     "start": "node ./dist/main.bundle.js",
     "dev": "npx concurrently \"npm:build:watch\" \"npm:dev:watch\"",
     "build:watch": "WATCHPACK_POLLING=true NODE_ENV=\"development\" npx webpack -w",
+    "build:dev": "NODE_ENV=\"development\" npx webpack",
     "dev:watch": "npx nodemon -L ./dist/main.bundle.js"
   },
   "dependencies": {

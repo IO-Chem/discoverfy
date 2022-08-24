@@ -1,6 +1,4 @@
-const path = require("path");
+import { resolve } from "path";
 
-module.exports = {
-    isProd: process.env.NODE_ENV === "production",
-    distFolder: path.resolve(__dirname, "../dist"),
-}
+export const isProd = process.env.NODE_ENV === "production";
+export const distFolder = resolve(__dirname, "../dist");
