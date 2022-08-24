@@ -5,11 +5,11 @@ FROM node:16.17.0-alpine3.16
 WORKDIR /app
 
 # Copy package.json and yarn.lock to root directory
-COPY /app/package*.json ./
+#COPY /app/package*.json ./
 
 # Install all necessary packages
-RUN npm install
+#RUN npm install
 
-ENV PATH=$PATH:./node_modules/.bin
+#ENV PATH=$PATH:./node_modules/.bin
 
-COPY ./app .
+#COPY ./app .

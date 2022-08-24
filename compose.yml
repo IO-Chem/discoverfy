@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    links:
+      - express
     volumes:
       - ./app:/app
     ports:
@@ -13,7 +15,7 @@ services:
 
   express:
     container_name: express-dev
-    tty: true
+    #tty: true
     build:
       context: .
       dockerfile: Dockerfile.server
@@ -21,4 +23,4 @@ services:
       - ./server:/server
     ports:
       - "5000:5000"
-    #command: ["npm", "start"]
+    command: ["npm", "run", "dev"]
