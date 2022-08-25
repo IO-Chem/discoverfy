@@ -38,7 +38,7 @@ function App() {
           // Set access_token if found in response
           setToken(json.access_token);
         }).catch(error => {
-          console.error("This ya boi Erron foulin' up yo bizzness:", error)
+          console.error("This ya boi erra foulin' up ya bizznis:", error)
         });
     });
 
@@ -52,7 +52,7 @@ function App() {
               { (token === null) ? <Login/> : <WebPlayback token={token} /> }
             </>
             <Text>
-              Edit {token} <Code fontSize="xl">src/App.js</Code> and save to reload.
+              Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
             </Text>
             <Link
               color="teal.500"
