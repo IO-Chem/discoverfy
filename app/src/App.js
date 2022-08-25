@@ -9,21 +9,25 @@ import {
   Grid,
   theme,
 } from '@chakra-ui/react';
-import { ColorModeSwitcher } from './ColorModeSwitcher';
+import { ColorModeSwitcher } from './utils/ColorModeSwitcher';
 import './App.css'
 
-import WebPlayback from './WebPlayback';
-import Login from './Login';
+import Login from './components/Login';
 
 
 function App() {
 
   const [token, setToken] = useState(null);
+
+  // determine address for auth calls depending on
+  // what NODE_ENV is set to
   let api_address = ""
   if (process.env.NODE_ENV === "development") {
       api_address = "http://localhost:5000/auth"
   }
   let href_token = `${api_address}/token`
+
+  // looks for token from auth/token address on express server
   useEffect(() => {
       fetch(href_token)
         .then(async response => {
@@ -36,6 +40,7 @@ function App() {
             return Promise.reject(error)
           };
           // Set access_token if found in response
+          console.log(json)
           setToken(json.access_token);
         }).catch(error => {
           console.error("This ya boi erra foulin' up ya bizznis:", error)
@@ -49,7 +54,7 @@ function App() {
         <ColorModeSwitcher justifySelf="flex-end" />
           <VStack spacing={10}>
             <>
-              { (token === null) ? <Login/> : <WebPlayback token={token} /> }
+              { (token === null) ? <Login/> : <Text token={token}>{token}</Text> }
             </>
             <Text>
               Edit <Code fontSize="xl">src/App.js</Code> and save to reload.
