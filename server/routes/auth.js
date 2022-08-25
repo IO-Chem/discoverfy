@@ -1,4 +1,5 @@
 import Router, { response } from 'express';
+import cors from 'cors';
 import request from 'request';
 import { generateRandomString } from '../src/serverConfig'
 
@@ -17,9 +18,14 @@ var access_token = null;
 
 // Insert custum middleware for auth routes here
 router.use((req, res, next) => {
-  console.log(`Time: ${Date.now()}`)
-  next()
-})
+  console.log(`Time: ${Date.now()}`);
+  if (process.env.NODE_ENV === "development") {
+    console.log("CORS Enabled")
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  };
+  next();
+});
 
 // Login to Spotify endpoint
 router.get('/login', (req, res) => {
@@ -66,8 +72,9 @@ router.get('/callback', (req, res) => {
   request.post(authOptions, function(err, response, body) {
     if (!err && response.statusCode === 200) {
       access_token = body.access_token;
-      console.log(access_token)
       res.redirect('http://localhost:3000/')
+    } else {
+      console.log(err)
     }
   });
 });

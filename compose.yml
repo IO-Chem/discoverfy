@@ -5,8 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    links:
-      - express
+    networks:
+      - react-express
     volumes:
       - ./app:/app
     ports:
@@ -19,8 +19,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.server
+    links:
+      - react
+    networks:
+      - react-express
     volumes:
       - ./server:/server
     ports:
       - "5000:5000"
     command: ["npm", "run", "dev"]
+
+networks:
+  react-express:
