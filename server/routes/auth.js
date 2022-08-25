@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === "development") {
 let callback_uri = `${api_address}/callback`
 
 
-var access_token = null;
+var authResponse = null;
 
 // Insert custum middleware for auth routes here
 router.use((req, res, next) => {
@@ -91,9 +91,9 @@ router.get('/callback', (req, res) => {
     json: true,
   };
 
-  request.post(authOptions, function(err, response, body) {
+  request.post(authOptions, (err, response, body) => {
     if (!err && response.statusCode === 200) {
-      access_token = body.access_token;
+      authResponse = body;
       res.redirect('http://localhost:3000/')
     } else {
       console.log(err)
@@ -103,6 +103,7 @@ router.get('/callback', (req, res) => {
 
 // Endpoint to access token in JSON format
 router.get('/token', (req, res) => {
-  res.json({ access_token: access_token })
+  res.json({ authResponse: authResponse })
 })
+
 export default router;
