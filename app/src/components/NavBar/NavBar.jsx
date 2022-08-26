@@ -20,18 +20,18 @@ export default function NavBar(props) {
     let href_login = `${api_address}/login`
 
     return (
-        <Flex boxShadow="base" minWidth='max-content' alignItems='center' gap='4'>
+        <Flex minWidth='max-content' alignItems='center' gap='4'>
             <Box p='2'>
                 <Heading size='md' color="1ED760">Discoverfy</Heading>
             </Box>
             <Spacer />
             <>
             {(props.token === "") ?
-                <Button as="a" leftIcon={<BLKSpotifyIcon />} variant="solid" colorScheme="green" color="blackAlpha.900" href={href_login}>
+                <Button as="a" size="sm" leftIcon={<BLKSpotifyIcon />} variant="solid" colorScheme="green" href={href_login}>
                     Login with Spotify
                 </Button>
                 :
-                <Button leftIcon={<GRNSpotifyIcon />} variant="outline" colorScheme="green" _hover="none" _active="none" border="2px">
+                <Button size="sm" leftIcon={<GRNSpotifyIcon />} variant="outline" colorScheme="green" _hover="none" _active="none" border="2px">
                     Logged in
                 </Button>
             }
