@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { ColorModeSwitcher } from './utils/ColorModeSwitcher';
 import {
   ChakraProvider,
-  Box,
-  Text,
-  VStack,
-  Grid,
-  theme,
 } from '@chakra-ui/react';
-import './App.css'
 
-import Login from './components/Login';
+import theme from './styles/Theme';
+import NavBar from './components/NavBar/NavBar';
 
 function App() {
-  const [accessToken, setAccessToken] = useState(null);
+  const [accessToken, setAccessToken] = useState("");
   const [expiresAt, setExpiresAt] = useState(Date.now());
   // determine address for auth calls depending on
   // what NODE_ENV is set to
@@ -51,24 +45,7 @@ function App() {
 
   return (
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={10}>
-            <>
-              { 
-                (accessToken === null) ?
-                  <Login/>
-                  :
-                  <Text token={accessToken}>{accessToken}</Text>
-              }
-            </>
-            <Text>
-              with Hot Reload all up inya face from a containerized place...
-            </Text>
-          </VStack>
-        </Grid>
-      </Box>
+      <NavBar token={accessToken}></NavBar>
     </ChakraProvider>
   );
 }
