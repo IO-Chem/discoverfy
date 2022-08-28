@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-    chakra,
     Box,
     Button,
     Flex,
@@ -20,22 +19,24 @@ export default function NavBar(props) {
     let href_login = `${api_address}/login`
 
     return (
-        <Flex minWidth='max-content' alignItems='center' gap='4'>
-            <Box p='2'>
-                <Heading size='md' color="1ED760">Discoverfy</Heading>
+        <Flex minWidth='max-content' alignItems='center' gap='4' bgGradient="linear(to-r, green.500 20%, purple.700, black 80%)">
+            <Box pl="5">
+                <Heading size="lg" fontFamily="trebuchet ms" letterSpacing="10px" bgGradient="linear(to-r, purple.600, black 80%)" bgClip="text" fontWeight="extrabold">
+                    Discoverfy
+                </Heading>
             </Box>
             <Spacer />
-            <>
+            <Box p='3'>
             {(props.token === "") ?
-                <Button as="a" size="sm" leftIcon={<BLKSpotifyIcon />} variant="solid" colorScheme="green" href={href_login}>
+                <Button as="a" leftIcon={<BLKSpotifyIcon />} variant="solid" colorScheme="green" href={href_login} color="black">
                     Login with Spotify
                 </Button>
                 :
-                <Button size="sm" leftIcon={<GRNSpotifyIcon />} variant="outline" colorScheme="green" _hover="none" _active="none" border="2px">
+                <Button leftIcon={<GRNSpotifyIcon />} variant="outline" colorScheme="green" _hover="none" _active="none" border="2px">
                     Logged in
                 </Button>
             }
-            </>
+            </Box>
         </Flex>
     );
 }
