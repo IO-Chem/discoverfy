@@ -1,6 +1,10 @@
 # Latest LTS Node release as of 2022.08.19
 FROM node:16.17.0-alpine3.16
 
+# Potential fix to prevent containers from crashing when
+# the number of filewatchers are short
+RUN echo fs.inotify.max_user_watches=393210 | tee -a /etc/sysctl.conf && sysctl -p
+
 # Set working directory for image
 WORKDIR /app
 
