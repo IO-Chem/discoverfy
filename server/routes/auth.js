@@ -106,4 +106,33 @@ router.get('/token', (req, res) => {
   res.json({ authResponse: authResponse })
 })
 
+// Endpoint to refresh access token
+router.post('/refresh_token', (req, res) => {
+  let refresh_token = req.body.refresh_token;
+  let authString = `${client_id}:${client_key}`
+  let authOptions = {
+    url: "https://accounts.spotify.com/api/token",
+    form: {
+      refresh_token: refresh_token,
+      grant_type: "refresh_token",
+    },
+    headers: {
+      "Authorization": "Basic " + (Buffer.from(authString).toString("base64")),
+      "ContentType": "application/x-www-form-urlencoded",
+    },
+    json: true,
+  };
+
+  request.post(authOptions, (err, response, body) => {
+    if (!err && response.statusCode === 200) {
+      console.log("this is fine")
+      authResponse = body;
+      res.json({ authResponse: authResponse })
+    } else {
+      console.log(err)
+    }
+  })
+
+})
+
 export default router;

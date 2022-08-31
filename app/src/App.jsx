@@ -11,8 +11,12 @@ import {
 } from '@chakra-ui/react';
 
 import theme from './styles/Theme';
+import { useInterval } from './utils/useInterval';
 import NavBar from './components/NavBar';
 import MusicPreferences from './components/MusicPreferences'
+import axios from 'axios';
+
+const CHECK_EXPIRY_INTERVAL = 15000 // check every 15 seconds
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
@@ -30,7 +34,7 @@ function App() {
   // looks for auth response from auth/token address on express server
   useEffect(() => {
     // this will trigger on initialization of app
-    if (accessToken === "") {
+    if (!isLoggedIn) {
       // request a new token if refresh token missing
       fetch(`${auth_address}/token`)
         .then(async response => {
@@ -48,19 +52,47 @@ function App() {
           setExpiresAt(expiry_time);
           // Set tokens if found in response
           setAccessToken(json.authResponse.access_token);
-          setRefreshToken(json.authResposne.refresh_token);
+          setRefreshToken(json.authResponse.refresh_token);
           setIsLoggedIn(true)
         }).catch(err => {
           console.error("This ya boi erra foulin' up ya bizznis:", err)
         });    
     }
-  });
+  }, [
+    isLoggedIn,
+    auth_address
+  ]);
 
   // A second effect that polls for the expiration of the access token
-  useEffect(() => {
-    setTimeout(function () {}
-    )
-  });
+  useInterval(
+    async () => {
+      console.log("Checking if access token needs to be refreshed...");
+      if (Date.now() > expiresAt) {
+        if (refreshToken !== "") {
+          axios.post(
+            `${auth_address}/refresh_token`, {
+              refresh_token: refreshToken
+            }).then((res) => {
+              let authRes = res.data.authResponse
+              console.log("Response from /refresh_token endpoint:")
+              console.log(authRes)
+              let expiry_time = Date.now() + 1000 * (authRes.expires_in - 60)
+              setExpiresAt(expiry_time);
+              setAccessToken(authRes.access_token);
+              if (authRes.refresh_token) {
+                setRefreshToken(authRes.refresh_token)
+              } else {
+                setRefreshToken("")
+              }
+            }).catch((err) => {
+              console.log(err)
+            })
+          } else {
+            console.log("Auth token expiry with no refresh token available, must log back on to use system")
+            setIsLoggedIn(false)
+          }
+      }
+    }, CHECK_EXPIRY_INTERVAL);
 
 
   return (
