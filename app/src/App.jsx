@@ -16,13 +16,13 @@ import NavBar from './components/NavBar';
 import MusicPreferences from './components/MusicPreferences'
 import axios from 'axios';
 
-const CHECK_EXPIRY_INTERVAL = 15000 // check every 15 seconds
+const CHECK_EXPIRY_INTERVAL = 30000 // check every 30 seconds
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
   const [refreshToken, setRefreshToken] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [expiresAt, setExpiresAt] = useState(Date.now() - 100000);
+  const [expiresAt, setExpiresAt] = useState(Date.now());
   
   // determine address for auth calls depending on
   // what NODE_ENV is set to
