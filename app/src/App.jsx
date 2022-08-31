@@ -67,7 +67,7 @@ function App() {
   useInterval(
     async () => {
       console.log("Checking if access token needs to be refreshed...");
-      if (Date.now() > expiresAt) {
+      if (Date.now() > expiresAt && isLoggedIn) {
         if (refreshToken !== "") {
           axios.post(
             `${auth_address}/refresh_token`, {
