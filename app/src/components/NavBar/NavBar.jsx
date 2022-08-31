@@ -27,7 +27,7 @@ export default function NavBar(props) {
             </Box>
             <Spacer />
             <Box p='3'>
-            {(props.token === "") ?
+            {(props.loggedIn === false) ?
                 <Button as="a" leftIcon={<BLKSpotifyIcon />} variant="solid" colorScheme="green" href={href_login} color="black">
                     Login with Spotify
                 </Button>
