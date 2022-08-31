@@ -16,6 +16,7 @@ import MusicPreferences from './components/MusicPreferences'
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
+  const [refreshToken, setRefreshToken] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [expiresAt, setExpiresAt] = useState(Date.now() - 100000);
   
@@ -28,8 +29,8 @@ function App() {
 
   // looks for auth response from auth/token address on express server
   useEffect(() => {
-    // this will trigger on initialization of app or expiration of token
-    if (Date.now() > expiresAt) {
+    // this will trigger on initialization of app
+    if (accessToken === "") {
       // request a new token if refresh token missing
       fetch(`${auth_address}/token`)
         .then(async response => {
@@ -41,17 +42,26 @@ function App() {
             const error = (json && json.message) || response.status;
             return Promise.reject(error)
           };
-          // start refresh sequence 15 seconds before actual expiration of token
-          let expiry_time = Date.now() + 1000 * (json.authResponse.expires_in - 15)
+          console.log(json)
+          // start refresh sequence one minute before actual expiration of token
+          let expiry_time = Date.now() + 1000 * (json.authResponse.expires_in - 60)
           setExpiresAt(expiry_time);
-          // Set access_token if found in response
+          // Set tokens if found in response
           setAccessToken(json.authResponse.access_token);
+          setRefreshToken(json.authResposne.refresh_token);
           setIsLoggedIn(true)
         }).catch(err => {
           console.error("This ya boi erra foulin' up ya bizznis:", err)
         });    
     }
   });
+
+  // A second effect that polls for the expiration of the access token
+  useEffect(() => {
+    setTimeout(function () {}
+    )
+  });
+
 
   return (
     <ChakraProvider theme={theme}>
